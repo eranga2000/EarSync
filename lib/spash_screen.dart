@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/login_page.dart';
 
 // Your main app screen
 
@@ -7,7 +6,7 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+   createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_player/screen_size.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -6,27 +7,30 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login Page'),
-      ),
+      appBar: AppBar(title: const Text('Login Page')),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/images/logo.png',scale: 2.0,),
-              
-              Text('EarSync',style: TextStyle(fontSize: 30.0,fontWeight: FontWeight.bold),),
-              SizedBox(height: 12.0,),
-              Text("Play YT Music",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w100),),
+              Image.asset('assets/images/logo.png', scale: 2.0),
+
+              Text(
+                'EarSync',
+                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 12.0),
+              Text(
+                "Play YT Music",
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w100),
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: TextField(
-                  
                   autofillHints: const [AutofillHints.email],
                   decoration: InputDecoration(
-                                    prefixIcon: const Icon(Icons.email),
-                
+                    prefixIcon: const Icon(Icons.email),
+
                     hintText: 'Email',
                   ),
                 ),
@@ -38,45 +42,47 @@ class LoginPage extends StatelessWidget {
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
                     hintText: 'Password',
-                    
                   ),
                 ),
               ),
-              SizedBox(height: 12.0,),
+              SizedBox(height: 12.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.all(8.0),
                   minimumSize: const Size(350.0, 35.0),
-                 backgroundColor: const Color.fromRGBO(68,188,60 ,1),
-                 foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromRGBO(68, 188, 60, 1),
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                onPressed: (){},
-                child: const Text('Login',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
+                onPressed: () {},
+                child: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
               ),
-              SizedBox(height: 12.0,),
-             ElevatedButton(
+              SizedBox(height: 12.0),
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  minimumSize: Size(ScreenSize.screenWidth(context) / 3, 35.0),
+                  backgroundColor: const Color.fromARGB(255, 241, 252, 241),
+                  foregroundColor: const Color.fromARGB(255, 9, 0, 0),
 
-                  
-                  minimumSize: const Size(350.0, 35.0),
-                backgroundColor: const Color.fromARGB(255, 241, 252, 241),
-                 foregroundColor: const Color.fromARGB(255, 9, 0, 0),
-               
                   shape: RoundedRectangleBorder(
-                    
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                onPressed: (){
-                   Navigator.pushNamed(context,  '/signup');
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signup');
                 },
-                child: const Text('Create Account',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w300),),
+                child: const Text(
+                  'Create Account',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
+                ),
               ),
             ],
-          ), 
+          ),
         ),
       ),
     );
