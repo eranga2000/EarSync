@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581058034116",
+    "project_id": "earsync-3be62",
+    "storage_bucket": "earsync-3be62.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581058034116:android:bd3f5f6f55aa1d0df78c91",
+        "android_client_info": {
+          "package_name": "com.example.music_player"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGn9FRyGrhMhfCTFNOkBNiPlSX2hh-VP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
