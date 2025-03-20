@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:music_player/auth_service.dart';
+import 'package:provider/provider.dart';
 
-class CreateAccountPage extends StatelessWidget {
+class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
 
+  @override
+  State<CreateAccountPage> createState() => _CreateAccountPageState();
+}
+
+class _CreateAccountPageState extends State<CreateAccountPage> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +44,7 @@ class CreateAccountPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: TextField(
+                  controller: _emailController,
                   autofillHints: const [AutofillHints.email],
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
@@ -37,6 +56,8 @@ class CreateAccountPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: TextField(
+                  controller: _passwordController,
+
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
@@ -45,9 +66,10 @@ class CreateAccountPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 12.0),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: TextField(
+                  controller: _confirmPasswordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock_reset),
@@ -65,7 +87,16 @@ class CreateAccountPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                    if (_passwordController.text ==
+                      _confirmPasswordController.text) {
+                    Provider.of<AuthService>(
+                      context,
+                      listen: false,
+                    ).signUp(_emailController.text, _passwordController.text);
+                   Navigator.pushReplacementNamed(context, '/login');
+                  }
+                },
                 child: const Text(
                   'Create',
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -83,7 +114,7 @@ class CreateAccountPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                 
+                Navigator.pushReplacementNamed(context, '/login');
                 },
                 child: const Text(
                   'Login',
