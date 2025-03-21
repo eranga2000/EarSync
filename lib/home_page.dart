@@ -7,7 +7,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(title: const Text('Login Page')),
       body: Center(
@@ -15,8 +14,10 @@ class HomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Provider.of<AuthService>(context, listen: false).logout();
+       
+                if (!context.mounted) return;
                 Navigator.of(context).pushReplacementNamed('/login');
+     Provider.of<AuthService>(context, listen: false).logout();
               },
               child: Text('Sign Out'),
             ),
