@@ -6,7 +6,6 @@
 //   User? get currentUser => _auth.currentUser;
 //   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-
 //   Future<String?> registration({
 //     required String email,
 //     required String password,
@@ -29,7 +28,6 @@
 //       return e.toString();
 //     }
 //   }
-
 
 //   Future<String?> login({
 //     required String email,
@@ -54,12 +52,10 @@
 //     }
 //   }
 
-
 // Future<void> signOut() async {
 //     await _auth.signOut();
 //   }
 // }
-
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -77,12 +73,23 @@ class AuthService with ChangeNotifier {
     });
   }
 
-  Future<void> signUp(String email, String password) async {
-    await _auth.createUserWithEmailAndPassword(email: email, password: password);
+  Future<String> signUp(String email, String password) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      return e.code;
+    }
+    
   }
 
-  Future<void> login(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+  Future<String> login(String email, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      return e.code;
+    }
   }
 
   Future<void> logout() async {

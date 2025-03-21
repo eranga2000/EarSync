@@ -11,8 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   
   @override
@@ -75,29 +75,17 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                onPressed: () {
-                  try{
-                      Provider.of<AuthService>(context, listen: false).login(
-                  _emailController.text,
-                  _passwordController.text,
-                  );
-                  Navigator.pushReplacementNamed(context, '/home');
-                  }catch(e){
-                    ScaffoldMessenger.of(context).showSnackBar(
-  SnackBar(
-    content: Text("No internet connection!"),
-    backgroundColor: Colors.orange,
-    action: SnackBarAction(
-      label: "Retry",
-      textColor: Colors.white,
-      onPressed: () {
-        // Your retry function here
-      },
-    ),
-  ),
-);
-
-                  }
+                onPressed: () async{
+               
+                   String msg=await Provider.of<AuthService>(context, listen: false).login(_emailController.text, _passwordController.text);
+                   if(msg=='Success'&&context.mounted){
+                      
+                                       Navigator.pushReplacementNamed(context, '/home');
+                
+     
+                   }
+                  
+                  
                 
                 },
                 child: const Text(
