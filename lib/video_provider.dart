@@ -3,8 +3,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class VideoModel {
-  final String title;
-  final String thumbnailUrl;
+  final String? title;
+  final String? thumbnailUrl;
   final String videoUrl;
 
   VideoModel({
@@ -54,28 +54,39 @@ class VideoProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    List<VideoModel> fetchedVideos = [];
-
+    // 1. Initial Population
+    List<VideoModel> initialVideos = [];
     for (var link in ytLinks) {
-      try {
-        final videoId = Uri.parse(link).pathSegments.last;
-        final video = await _youtubeExplode.videos.get(videoId);
+      initialVideos.add(
+        VideoModel(
+          videoUrl: link,
+          title: null, // Or "Loading title..."
+          thumbnailUrl: null, // Or a placeholder image URL
+        ),
+      );
+    }
+    _videos = initialVideos;
+    _isLoading = false;
+    notifyListeners(); // Show the list structure quickly
 
-        fetchedVideos.add(
-          VideoModel(
-            title: video.title,
-            thumbnailUrl: video.thumbnails.lowResUrl,
-            videoUrl: link,
-          ),
+    // 2. Asynchronous Fetching of Details
+    for (int i = 0; i < _videos.length; i++) {
+      try {
+        final videoId = Uri.parse(_videos[i].videoUrl).pathSegments.last;
+        final video = await _youtubeExplode.videos.get(videoId);
+        _videos[i] = VideoModel( 
+          title: video.title,
+          thumbnailUrl: video.thumbnails.lowResUrl, // or mediumResUrl
+          videoUrl: _videos[i].videoUrl,
         );
+        notifyListeners(); // Update UI for this item
       } catch (e) {
-        debugPrint('Error fetching video: $e');
+        debugPrint('Error fetching video details for ${_videos[i].videoUrl}: $e');
+        // Optionally update the model with error information
+        // _videos[i].title = "Error loading title";
+        // notifyListeners();
       }
     }
-
-    _videos = fetchedVideos;
-    _isLoading = false;
-    notifyListeners();
   }
 
   /// Fetch audio stream and play the selected video
