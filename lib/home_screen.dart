@@ -40,29 +40,39 @@ class _HomeScreenState extends State<HomeScreen> {
             final video = videoProvider.videos[index];
 
             return ListTile(
-              leading: CachedNetworkImage(
-                imageUrl: video.thumbnailUrl,
-                width: 80,
-                height: 50,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Container(
-                    width: 80,
-                    height: 50,
-                    color: Colors.white,
-                  ),
-                ),
-                errorWidget: (context, url, error) => Container(
-                  width: 80,
-                  height: 50,
-                  color: Colors.grey,
-                  child: const Icon(Icons.broken_image, color: Colors.white),
-                ),
-              ),
+              leading: (video.thumbnailUrl == null || video.thumbnailUrl!.isEmpty)
+                  ? Shimmer.fromColors( // Or your preferred placeholder if thumbnail URL is not yet available
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 80,
+                        height: 50,
+                        color: Colors.white,
+                      ),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: video.thumbnailUrl!, // Now we know it's not null here
+                      width: 80,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          width: 80,
+                          height: 50,
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        width: 80,
+                        height: 50,
+                        color: Colors.grey,
+                        child: const Icon(Icons.broken_image, color: Colors.white),
+                      ),
+                    ),
               title: Text(
-                video.title,
+                video.title ?? "Loading title...", // Or handle empty string if preferred
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
